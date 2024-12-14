@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connection Requests - Mentorship Platform</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Mentorship Platform</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">Edit Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/feed">Activity Feed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/messages">Messages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/connect">
+                        Connection Requests <span id="notification-count" class="badge badge-info"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1 class="text-center">Connection Requests</h1>
+        <div class="text-center">
+            <button id="toggle-notifications" class="btn btn-info">Toggle Notifications</button>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <h2>Pending Requests Sent</h2>
+                <ul id="pending-sent-requests" class="list-group">
+                    <!-- Pending sent requests will be dynamically added here -->
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h2>Requests Received</h2>
+                <ul id="received-requests" class="list-group">
+                    <!-- Received requests will be dynamically added here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleNotifications = document.getElementById('toggle-notifications');
+            const pendingSentRequests = document.getElementById('pending-sent-requests');
+            const receivedRequests = document.getElementById('received-requests');
+            const notificationCount = document.getElementById('notification-count');
+
+            // Fetch pending sent requests
+            fetch('/pending-sent-requests')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(request => {
+                        const listItem = document.createElement('li');
+                        listItem.className = 'list-group-item';
+                        listItem.innerHTML = `Request to <a href="/profile/${request.mentor_id}">${request.mentor_id}</a>`;
+                        pendingSentRequests.appendChild(listItem);
+                    });
+                })
+                .catch(err => console.error('Error fetching pending sent requests:', err));
+
+            // Fetch received requests
+            fetch('/received-requests')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(request => {
+                        const listItem = document.createElement('li');
+                        listItem.className = 'list-group-item';
+                        listItem.innerHTML = `
+                            Request from <a href="/profile/${request.mentee_id}">${request.mentee_id}</a>
+                            <form action="/accept-request" method="POST" class="d-inline-block ml-3">
+                                <input type="hidden" name="requestId" value="${request.id}">
+                                <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                            </form>
+                            <form action="/delete-request" method="POST" class="d-inline-block ml-2">
+                                <input type="hidden" name="requestId" value="${request.id}">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>`;
+                        receivedRequests.appendChild(listItem);
+                    });
+                })
+                .catch(err => console.error('Error fetching received requests:', err));
+
+            // Fetch notification count
+            fetch('/notification-count')
+                .then(response => response.json())
+                .then(data => {
+                    notificationCount.textContent = data.count;
+                })
+                .catch(err => console.error('Error fetching notification count:', err));
+
+            // Handle notifications toggle
+            toggleNotifications.addEventListener('click', () => {
+                // Your logic to toggle notifications
+                alert('Notifications toggled!');
+            });
+        });
+    </script>
+</body>
+</html>

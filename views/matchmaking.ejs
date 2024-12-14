@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matchmaking - Mentorship Matching Platform</title>
+    <!-- Include Bootstrap CSS for styling -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <button onclick="goBack()" class="btn btn-secondary mt-3">Back to Previous Page</button>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+        <h1 class="text-center">Potential Matches</h1>
+        <!-- List to display potential matches -->
+        <ul id="matches" class="list-group mt-4">
+            <% if (matches && matches.length > 0) { %>
+                <% matches.forEach(match => { %>
+                    <li class="list-group-item">
+                        <strong>Username:</strong> <%= match.username %><br>
+                        <strong>Role:</strong> <%= match.role %><br>
+                        <strong>Skills:</strong> <%= match.skills %><br>
+                        <strong>Interests:</strong> <%= match.interests %><br>
+                        <strong>Bio:</strong> <%= match.bio %>
+                    </li>
+                <% }); %>
+            <% } else { %>
+                <li class="list-group-item">No matches found. Try broadening your search criteria.</li>
+            <% } %>
+        </ul>
+        <% if (message) { %>
+            <!-- Display a message if provided -->
+            <div class="alert alert-info mt-4"><%= message %></div>
+        <% } %>
+    </div>
+    <!-- Include Bootstrap JS for functionality -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

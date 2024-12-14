@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Setup - Mentorship Matching Platform</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <button onclick="goBack()" class="btn btn-secondary mt-3">Back to Previous Page</button>
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+        </script>
+
+        <h1 class="text-center">Profile Setup</h1>
+        
+        <!-- Form for profile setup -->
+        <form action="/profile" method="POST" enctype="multipart/form-data" class="mt-4">
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select id="role" name="role" class="form-control" required>
+                    <option value="mentor">Mentor</option>
+                    <option value="mentee">Mentee</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="skills">Skills:</label>
+                <input type="text" id="skills" name="skills" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="interests">Interests:</label>
+                <input type="text" id="interests" name="interests" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="bio">Bio:</label>
+                <textarea id="bio" name="bio" rows="4" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="profilePicture">Profile Picture:</label>
+                <input type="file" id="profilePicture" name="profilePicture" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="coverPhoto">Cover Photo:</label>
+                <input type="file" id="coverPhoto" name="coverPhoto" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Save Profile</button>
+        </form>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connection Request - Success</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <button onclick="goBack()" class="btn btn-secondary mt-3">Back to Previous Page</button>
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+        </script>
+        <h1 class="text-center"><%= message %></h1>
+        <h2>User Profile</h2>
+        <p><strong>Username:</strong> <%= user.username %></p>
+        <p><strong>Role:</strong> <%= user.role %></p>
+        <p><strong>Skills:</strong> <%= user.skills %></p>
+        <p><strong>Interests:</strong> <%= user.interests %></p>
+        <p><strong>Bio:</strong> <%= user.bio %></p>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

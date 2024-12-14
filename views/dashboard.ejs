@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Mentorship Matching Platform</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Include Navbar Partial -->
+    <%- include('partials/navbar'); %>
+    <div class="container mt-5">
+        <button onclick="goBack()" class="btn btn-secondary mt-3">Back to Previous Page</button>
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+        </script>
+
+        <h1>Welcome back, <%= username %>!</h1>
+        
+        <!-- Display cover photo if available -->
+        <% if (coverPhoto) { %>
+            <div class="text-center">
+                <img src="/uploads/<%= coverPhoto %>" class="img-fluid" alt="Cover Photo">
+            </div>
+        <% } %>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <h2>Profile Overview</h2>
+                
+                <!-- Display profile picture if available -->
+                <% if (profilePicture) { %>
+                    <div class="text-center">
+                        <img src="/uploads/<%= profilePicture %>" class="img-thumbnail" alt="Profile Picture">
+                    </div>
+                <% } %>
+                
+                <p><strong>Role:</strong> <%= role %></p>
+                <p><strong>Skills:</strong> <%= skills %></p>
+                <p><strong>Interests:</strong> <%= interests %></p>
+                <p><strong>Bio:</strong> <%= bio %></p>
+                <a href="/profile" class="btn btn-primary btn-block">Edit Profile</a>
+            </div>
+            <div class="col-md-4">
+                <h2>Notifications</h2>
+                <ul class="list-group">
+                    <% if (notifications && notifications.length > 0) { %>
+                        <% notifications.forEach(notification => { %>
+                            <li class="list-group-item"><%= notification.message %></li>
+                        <% }); %>
+                    <% } else { %>
+                        <li class="list-group-item">No notifications found.</li>
+                    <% } %>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h2>Current Connections</h2>
+                <ul class="list-group">
+                    <% if (connections && connections.length > 0) { %>
+                        <% connections.forEach(connection => { %>
+                            <li class="list-group-item">
+                                <strong>Connection ID:</strong> <%= connection.id %><br>
+                                <strong>Mentor ID:</strong> <%= connection.mentor_id %><br>
+                                <strong>Mentee ID:</strong> <%= connection.mentee_id %><br>
+                                <strong>Status:</strong> <%= connection.status %>
+                            </li>
+                        <% }); %>
+                    <% } else { %>
+                        <li class="list-group-item">No connections found.</li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <a href="/discover" class="btn btn-secondary btn-block">Discover Users</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/matchmaking" class="btn btn-secondary btn-block">Matchmaking</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/connect" class="btn btn-secondary btn-block">Connection Requests</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - Mentorship Platform</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Mentorship Platform</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">Edit Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/feed">Activity Feed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <button onclick="goBack()" class="btn btn-secondary mt-3">Back to Previous Page</button>
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+        </script>
+
+        <h1 class="text-center">Messages</h1>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <!-- Display messages -->
+                <% if (messages && messages.length > 0) { %>
+                    <% messages.forEach(message => { %>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= message.sender_username %> to <%= message.receiver_username %></h5>
+                                <p class="card-text"><%= message.message %></p>
+                                <small class="text-muted"><%= new Date(message.timestamp).toLocaleString() %></small>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text">No messages found.</p>
+                        </div>
+                    </div>
+                <% } %>
+                <!-- Message form -->
+                <form action="/messages" method="POST" class="mt-4">
+                    <div class="form-group">
+                        <label for="receiver_username">Send to:</label>
+                        <input type="text" id="receiver_username" name="receiver_username" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" rows="3" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
